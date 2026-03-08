@@ -58,9 +58,9 @@ HTML_PAGE = """<!DOCTYPE html>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --acc:#f5c842;
-  --acc2:#e8b830;
-  --bg:#09080a;
+  --acc:#8c5aff;
+  --acc2:#a87fff;
+  --bg:#07060f;
   --s1:color-mix(in srgb,var(--bg) 60%,#111);
   --s2:color-mix(in srgb,var(--bg) 40%,#1a1a1a);
   --s3:color-mix(in srgb,var(--bg) 20%,#222);
@@ -539,7 +539,7 @@ footer{
 const APP = {
   name:           'Workout Plan Generator',
   mode:           'fastapi',          // 'html' or 'fastapi'
-  auth:           true,    // true | false
+  auth:           false,    // true | false
   systemPrompt:   "You are an expert Workout Plan Generator assistant. Enter your fitness level, goals, available equipment, and time. Get a structured weekly workout plan.",
   promptTemplate: "Fitness Level: {{fitness_level}}\\nGoals: {{goals}}\\nEquipment: {{equipment}}\\nDays Per Week: {{days_per_week}}",
   resultFormat:   'steps', // text | list | steps
@@ -1043,3 +1043,8 @@ def history():
 @app.get("/api/health")
 def health():
     return {"status": "ok", "app": "Workout Plan Generator", "ai_ready": bool(GROQ_API_KEY)}
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
